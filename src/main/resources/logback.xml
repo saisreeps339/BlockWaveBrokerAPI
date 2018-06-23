@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+<!--Send log events to a console-->
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <Target>System.out</Target>
+    <encoder>
+      <pattern>%d [%thread] %level %mdc %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+	<Appender name="BlockWaveBrokerAPISplunkHEC"
+		class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+		<!-- <url>https://localhost:8088/services/collector/raw?channel=cd917678-b18e-4155-8812-97d6571892a8</url>-->
+		<url>https://localhost:8088</url>
+		<token>cd917678-b18e-4155-8812-97d6571892a8</token>
+		<host>localhost</host>
+		<index>main</index>
+		<sourcetype>BlockWaveBrokerAPI</sourcetype>
+		<disableCertificateValidation>true</disableCertificateValidation>
+		<batch_size_count>1</batch_size_count>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{ISO8601} [%thread] %-5level %logger{36}%5p %C{1} %M - %msg%n</pattern>
+		</layout>
+	</Appender>
+	
+
+	<logger name="BlockWaveBrokerAPISplunkLogger" level="debug">
+		<appender-ref ref="BlockWaveBrokerAPISplunkHEC" />
+	</logger>
+
+<!--Root logger-->
+  <root level="INFO">
+    <appender-ref ref="stdout"/>
+  </root>
+
+</configuration>

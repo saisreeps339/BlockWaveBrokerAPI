@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="BlockWaveBrokerAPI">
+		<class>insurwave.blockwavebrokerAPI.domain.Applicable_Vessel_Property</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Financials_Breakdown</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Payment_Schedule</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Payment_Schedule_Detail</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Section</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Section_Asset</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Subsection</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Subsection_Condition</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Subsection_Condition_Template</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Subsection_Insurer</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Contract_Subsection_Premium</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Digital_Certificate_Status</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Identity_Type</class>
+		<class>insurwave.blockwavebrokerAPI.domain.MasterAmountType</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Permission</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Program_Contract_Share_Status</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Contract</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Contract_Section</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Contract_Subsection</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Contract_Subsection_Reinsurer</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Program</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Program_Subscription</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Reinsurance_Referenced_DI_Contract</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Related_Contract</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Role</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Role_Permission</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Role_PermissionPK</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Schema_Version</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Subsection_Participant_Public_Role</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Subsection_Premium_Amount</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Subsection_Premium_Deductible</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Subsection_Premium_Deduction</class>
+		<class>insurwave.blockwavebrokerAPI.domain.Subsection_Premium_Tax</class>
+		<class>insurwave.blockwavebrokerAPI.domain.User</class>
+		<class>insurwave.blockwavebrokerAPI.domain.User_Role</class>
+		<class>insurwave.blockwavebrokerAPI.domain.User_RolePK</class>
+		<class>insurwave.blockwavebrokerAPI.domain.T</class>
+	</persistence-unit>
+</persistence>
