@@ -1,8 +1,11 @@
 package insurwave.blockwavebrokerAPI.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import insurwave.blockwavebrokerAPI.dao.DeductionsCTEDao;
 import insurwave.blockwavebrokerAPI.domain.Subsection_Premium_Deduction;
 import insurwave.blockwavebrokerAPI.repository.SubsectionPremiumDeductionRepository;
 import insurwave.blockwavebrokerAPI.service.SubsectionPremiumDeductionService;
@@ -22,6 +25,12 @@ public class SubsectionPremiumDeductionServiceImpl implements SubsectionPremiumD
 			Subsection_Premium_Deduction subsection_Premium_Deduction) {
 		return subsectionPremiumDeductionRepository.save(subsection_Premium_Deduction);
 
+	}
+
+	@Override
+	public List<DeductionsCTEDao> getDeductionDetails(String premiumAmountTypeCode, List<String> premiumReference) {
+
+		return subsectionPremiumDeductionRepository.getDeductionPojoDetails(premiumAmountTypeCode, premiumReference);
 	}
 
 }

@@ -48,7 +48,6 @@ import insurwave.blockwavebrokerAPI.service.ContractService;
 import insurwave.blockwavebrokerAPI.service.ContractSubsectionInsurerService;
 import insurwave.blockwavebrokerAPI.service.ContractSubsectionPremiumService;
 import insurwave.blockwavebrokerAPI.service.ContractSubsectionService;
-import insurwave.blockwavebrokerAPI.service.InsertUpdSubsectionPremiumAmountService;
 import insurwave.blockwavebrokerAPI.service.ParticipantPublicRoleService;
 import insurwave.blockwavebrokerAPI.service.SubsectionPremiumDeductibleService;
 import insurwave.blockwavebrokerAPI.service.SubsectionPremiumDeductionService;
@@ -126,8 +125,7 @@ public class ContractStepTwoProcessor {
 	private SubsectionPremiumTaxService subsectionPremiumTaxService;
 
 	@Autowired
-	// to be removed
-	private InsertUpdSubsectionPremiumAmountService insertUpdSubsectionPremiumAmountService;
+	private InsertUpdSubsectionPremiumAmountProcessor insertUpdSubsectionPremiumAmountProcessor;
 
 	/**
 	 * Processes Step Two contract data.
@@ -152,10 +150,8 @@ public class ContractStepTwoProcessor {
 			updatePremiumAmountToContract(contract_Section_UUID);
 			// add contract_Section to list to be returned
 			contract_Sections.add(contract_Section);
-		}
-
-		// TODO Stored proc call-to be removed
-		/// insertUpdSubsectionPremiumAmountService.update(contract_Section_UUIDs);
+		}		
+		insertUpdSubsectionPremiumAmountProcessor.process(contract_Sections);
 		return contract_Sections;
 	}
 
@@ -188,19 +184,21 @@ public class ContractStepTwoProcessor {
 	private List<Contract_Section_Asset> saveContractSectionAssets(Contract_Section contract_Section,
 			Vessel[] vessels) {
 		List<Contract_Section_Asset> contractSectionAssets = new ArrayList<Contract_Section_Asset>();
-		contractSectionAssetService.deleteByContractSection_UUID(contract_Section.getContract_Section_UUID());
-		_logger.info("Deleted Contract_Section_Asset records by Contract_Section_UUID: {}",
-				contract_Section.getContract_Section_UUID());
+		String contract_Section_UUID = contract_Section.getContract_Section_UUID();
+
+		contractSectionAssetService.deleteByContractSection_UUID(contract_Section_UUID);
+		_logger.info("Deleted Contract_Section_Asset records by Contract_Section_UUID: {}", contract_Section_UUID);
 		if (vessels != null && vessels.length > 0) {
 			for (Vessel vessel : vessels) {
 				Contract_Section_Asset contractSectionAsset = contractSectionAssetJsonToEntityConverter.convert(vessel);
 				// set the foreign key
 				contractSectionAsset.setContractSection(contract_Section);
-				contractSectionAsset = contractSectionAssetService.saveContract_Section_Asset(contractSectionAsset);
-				_logger.info("Created Contract_Section_Asset record with PK:{}",
-						contractSectionAsset.getContract_Section_Asset_UUID());
+				// add to list to be persisted
 				contractSectionAssets.add(contractSectionAsset);
 			}
+			// persist the list of contract_section assets
+			contractSectionAssets = contractSectionAssetService.saveContract_Section_Assets(contractSectionAssets);
+			_logger.info("Saved Contract_Section_Asset records for Contract_Section_UUID:{}", contract_Section_UUID);
 		}
 		return contractSectionAssets;
 	}

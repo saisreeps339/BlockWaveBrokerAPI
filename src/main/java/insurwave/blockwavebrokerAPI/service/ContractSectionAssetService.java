@@ -1,5 +1,7 @@
 package insurwave.blockwavebrokerAPI.service;
 
+import java.util.List;
+
 import insurwave.blockwavebrokerAPI.domain.Contract_Section_Asset;
 
 /**
@@ -25,4 +27,12 @@ public interface ContractSectionAssetService {
 	 * @return
 	 */
 	Contract_Section_Asset saveContract_Section_Asset(Contract_Section_Asset contractSectionAsset);
+
+	/**
+	 * Persist (create/update) the given contractSectionAssets
+	 * 
+	 * @param contractSectionAssets
+	 * @return
+	 */
+	List<Contract_Section_Asset> saveContract_Section_Assets(List<Contract_Section_Asset> contractSectionAsset);
 }

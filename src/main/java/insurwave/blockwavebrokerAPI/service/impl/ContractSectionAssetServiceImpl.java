@@ -1,5 +1,7 @@
 package insurwave.blockwavebrokerAPI.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,12 @@ public class ContractSectionAssetServiceImpl implements ContractSectionAssetServ
 	@Override
 	public Contract_Section_Asset saveContract_Section_Asset(Contract_Section_Asset contractSectionAsset) {
 		return contractSectionAssetRepository.save(contractSectionAsset);
+	}
+
+	@Override
+	public List<Contract_Section_Asset> saveContract_Section_Assets(
+			List<Contract_Section_Asset> contractSectionAssets) {
+		return contractSectionAssetRepository.saveAll(contractSectionAssets);
 	}
 
 }
