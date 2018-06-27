@@ -30,7 +30,9 @@ public class SubsectionPremiumDeductionServiceImpl implements SubsectionPremiumD
 	@Override
 	public List<DeductionsCTEDao> getDeductionDetails(String premiumAmountTypeCode, List<String> premiumReference) {
 
-		return subsectionPremiumDeductionRepository.getDeductionPojoDetails(premiumAmountTypeCode, premiumReference);
+		
+		
+		return subsectionPremiumDeductionRepository.getDeductionDetails(premiumAmountTypeCode, premiumReference);
+	
 	}
-
 }

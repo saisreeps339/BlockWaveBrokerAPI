@@ -138,6 +138,7 @@ public class ContractStepTwoProcessor {
 		List<Contract_Section> contract_Sections = new ArrayList<Contract_Section>();
 		for (ContractStepTwo contractSection : contractSections) {
 			Contract_Section contract_Section = saveContractSection(contractSection);
+			insertUpdSubsectionPremiumAmountProcessor.retrieveAndDeleteAllPremiumReferences(contract_Section);
 			// persist the associated Contract_Section_Asset records
 			saveContractSectionAssets(contract_Section, contractSection.vessels);
 			// persist the associated Contract_Subsection records
@@ -150,8 +151,7 @@ public class ContractStepTwoProcessor {
 			updatePremiumAmountToContract(contract_Section_UUID);
 			// add contract_Section to list to be returned
 			contract_Sections.add(contract_Section);
-		}		
-		insertUpdSubsectionPremiumAmountProcessor.process(contract_Sections);
+		}				
 		return contract_Sections;
 	}
 
@@ -229,6 +229,7 @@ public class ContractStepTwoProcessor {
 				saveContractSubsectionInsurer(contractSubsection.shareAllocations);
 				// persist associated Contract_subsection_Premium records
 				saveContractSubsectionPremium(contractSubsection.calculationPremium);
+				
 				// add to list to be returned
 				contract_Subsections.add(contract_Subsection);
 			}
@@ -249,20 +250,43 @@ public class ContractStepTwoProcessor {
 				Contract_Subsection_Premium contract_Subsection_Premium = contractSubsectionPremiumJsonToEntityConverter
 						.convert(calculationPremium);
 				contract_Subsection_Premium = contractSubsectionPremiumService
-						.saveContract_Subsection_Premium(contract_Subsection_Premium);
+						.saveContract_Subsection_Premium(contract_Subsection_Premium);				
 				_logger.info("Saved Contract_Subsection_Premium record with PK:{}",
 						contract_Subsection_Premium.getContract_Subsection_Premium_Reference());
+				//delete and insert values Subsection_Premium_Amount
+				insertUpdSubsectionPremiumAmountProcessor.insertGrossPremiumLine(contract_Subsection_Premium,BrokerAPIConstants.GROSS_PREMIUM);	
+				
 				// persist associated Subsection_Premium_Deductible records
 				saveSubsectionPremiumDeductibles(calculationPremium.subsection_Premium_Deductible);
 				// persist associated Subsection_Premium_Deduction records
 				saveSubsectionPremiumDeductions(calculationPremium.subsection_Premium_Amount_Deduction);
+				
 				// persist associated Subsection_Premium_Tax records
 				saveSubsectionPremiumTaxes(calculationPremium.subsection_Premium_Amount_Tax);
+				
+				//deduction on Gross premium - NET_PREMIUM_AFTER_DEDUCTIONS
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForDeductions(BrokerAPIConstants.GROSS_PREMIUM, BrokerAPIConstants.NET_PREMIUM_AFTER_DEDUCTIONS);
+				//Tax after NET_PREMIUM_AFTER_DEDUCTIONS
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForTaxes(BrokerAPIConstants.NET_PREMIUM_AFTER_DEDUCTIONS, BrokerAPIConstants.NET_PREMIUM_AFTER_BASE_TAX);
+				//Deductions after NET_PREMIUM_AFTER_BASE_TAX
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForDeductions(BrokerAPIConstants.NET_PREMIUM_AFTER_BASE_TAX, BrokerAPIConstants.NET_PREMIUM_AFTER_BASE_TAX_DEDUCTIONS);
+				//Tax after NET_PREMIUM_AFTER_BASE_TAX_DEDUCTIONS
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForTaxes(BrokerAPIConstants.NET_PREMIUM_AFTER_BASE_TAX_DEDUCTIONS, BrokerAPIConstants.NET_PREMIUM_AFTER_COMPOUND_TAX);
+				//Deduction after Compound tax and arrive NET_PREMIUM_AFTER_DEDUCTIONS_AND_TAX
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForDeductions(BrokerAPIConstants.NET_PREMIUM_AFTER_COMPOUND_TAX, BrokerAPIConstants.NET_PREMIUM_AFTER_DEDUCTIONS_AND_TAX);
+				//insert buyer premium and seller for all tax
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForBuyerOrSellerPremiumAllDetails(BrokerAPIConstants.LINE_NET_PREMIUM_FOR_BUYER);
+				insertUpdSubsectionPremiumAmountProcessor.insertIntoSubsectionPremiumAmountForBuyerOrSellerPremiumAllDetails(BrokerAPIConstants.LINE_NET_PREMIUM_FOR_SELLERS);
+				//Update seller premium if there is any tax on buyer premium for seller
+				insertUpdSubsectionPremiumAmountProcessor.UpdateSellerPremium(BrokerAPIConstants.LINE_NET_PREMIUM_FOR_BUYER,BrokerAPIConstants.LINE_NET_PREMIUM_FOR_SELLERS);					
+				
 				// add to list to be returned
 				contract_Subsection_Premiums.add(contract_Subsection_Premium);
-
+				
 			}
-		}
+			
+		}		
+		
 		return contract_Subsection_Premiums;
 	}
 

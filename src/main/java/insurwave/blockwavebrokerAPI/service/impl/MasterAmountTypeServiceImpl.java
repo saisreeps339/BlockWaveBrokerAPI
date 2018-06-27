@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +16,7 @@ import insurwave.blockwavebrokerAPI.service.MasterAmountTypeService;
 
 @Service
 public class MasterAmountTypeServiceImpl implements MasterAmountTypeService {
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
-
+	
 	@Autowired
 	private MasterAmountTypeRepository masterAmountTypeRepository;
 
@@ -33,12 +30,8 @@ public class MasterAmountTypeServiceImpl implements MasterAmountTypeService {
 	public BigDecimal getAmountValue(String subsection_Premium_Reference,
 			List<Subsection_Premium_Amount> subsectionPremiumAmounts, List<MasterAmountTypesDao> masterAmountDaos) {
 
-		BigDecimal amount = null;
+		BigDecimal amount = BigDecimal.ZERO;
 		List<MasterAmountTypesDao> masterAmountTypesDaoAddedValues = new ArrayList<>();
-
-		log.info(
-				" -----Step 5 populate MasterAmountTypesDao for premiumamount user defined table after updating with Premium_Amount from function GetPremiumAmountForAmountType  -----------");
-
 		for (Subsection_Premium_Amount subsectionPremiumAmount : subsectionPremiumAmounts) {
 			for (MasterAmountTypesDao masterAmountTypesDao : masterAmountDaos) {
 
@@ -53,8 +46,6 @@ public class MasterAmountTypeServiceImpl implements MasterAmountTypeService {
 			}
 		}
 
-		log.info(" -----Step 6 Sort  masterAmountTypesDao by Des order od sNo -----------");
-
 		Collections.sort(masterAmountTypesDaoAddedValues, new MasterAmountTypesComparator());
 
 		for (MasterAmountTypesDao m1 : masterAmountTypesDaoAddedValues) {
@@ -62,7 +53,6 @@ public class MasterAmountTypeServiceImpl implements MasterAmountTypeService {
 			if (m1.getAmount().compareTo(BigDecimal.ZERO) > 0)
 				amount = masterAmountTypesDaoAddedValues.get(0).getAmount();
 		}
-		log.info(" -----Step 7 return Top Amount value from function GetPremiumAmountForAmountType -----------");
 		return amount;
 
 	}

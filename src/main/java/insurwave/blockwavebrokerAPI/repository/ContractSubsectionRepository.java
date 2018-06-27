@@ -40,6 +40,14 @@ public interface ContractSubsectionRepository extends JpaRepository<Contract_Sub
 			+ "and cs.contract_Section_UUID = css.contract_Section_UUID\r\n" + "and cs.contract_Section_UUID in :uuids")
 
 	List<AllPremiumReferenceDao> allPremiumReferences(@Param("uuids") List<String> uuids);
+	
+	@Query("select csp.contract_Subsection_Premium_Reference\r\n"
+			+ "from Contract_Subsection css,  Contract_Subsection_Premium   csp, Contract_Section cs\r\n"
+			+ "where css.contract_Subsection_UUID = csp.contract_Subsection_UUID\r\n"
+			+ "and cs.contract_Section_UUID = css.contract_Section_UUID\r\n" + "and cs.contract_Section_UUID = :uuid")
+
+	List<String> allPremiumReferences(@Param("uuid") String uuid);
+
 
 	@Modifying
 	@Query("delete from Subsection_Premium_Amount c where c.subsection_Premium_Reference in :allPremiumRef")

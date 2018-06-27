@@ -2,8 +2,6 @@ package insurwave.blockwavebrokerAPI.service.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +52,11 @@ public class SubsectionPremiumAmountServiceImpl implements SubsectionPremiumAmou
 		subsectionPremiumAmountRepository.updateSubsectionRefrence(subsection_Premium_Amount.getPremium_Amount(),
 				subsection_Premium_Amount.getUI_Premium_Amount_Type_Code(),
 				subsection_Premium_Amount.getSubsection_Premium_Reference());
+	}
+
+	@Override
+	public void saveSubsectionPremiumAmount(Subsection_Premium_Amount subsection_Premium_Amount) {
+		subsectionPremiumAmountRepository.save(subsection_Premium_Amount);
 	}
 
 }

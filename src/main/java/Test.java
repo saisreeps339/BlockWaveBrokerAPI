@@ -30,7 +30,7 @@ public class Test {
 			ContractStepTwoController cr = new ContractStepTwoController();
 			cr.saveSection2ContractDetails(cs);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		      	// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

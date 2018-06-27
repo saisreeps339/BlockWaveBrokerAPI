@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import insurwave.blockwavebrokerAPI.dao.AllPremiumReferenceDao;
 import insurwave.blockwavebrokerAPI.dao.ContractSubsectionPremiumDao;
@@ -29,17 +28,19 @@ public class AllPremiumReferenceServiceImpl implements AllPremiumReferenceServic
 		return contractSubsectionRepository.allPremiumReferences(uuids);
 	}
 
-	@Transactional
+	
 	@Override
-	public void deletePremiumRef(List<AllPremiumReferenceDao> allPremiumRef) {
-		for (AllPremiumReferenceDao obj : allPremiumRef) {
-			allPremiumRefValue.add(obj.getContract_Subsection_Premium_Reference());
-		}
-		contractSubsectionRepository.deletePremiumRef(allPremiumRefValue);
+	public void deletePremiumRef(List<String> allPremiumRef) {	
+		contractSubsectionRepository.deletePremiumRef(allPremiumRef);
 	}
 
 	@Override
-	public List<ContractSubsectionPremiumDao> getContractSubsectionPrem(List<AllPremiumReferenceDao> allPremiumRef) {
-		return contractSubsectionRepository.getContractSubsectionPrem(allPremiumRefValue);
+	public List<ContractSubsectionPremiumDao> getContractSubsectionPrem(List<String> allPremiumRef) {
+		return contractSubsectionRepository.getContractSubsectionPrem(allPremiumRef);
+	}
+
+	@Override
+	public List<String> allPremiumReferences(String uuid) {
+		return contractSubsectionRepository.allPremiumReferences(uuid);
 	}
 }

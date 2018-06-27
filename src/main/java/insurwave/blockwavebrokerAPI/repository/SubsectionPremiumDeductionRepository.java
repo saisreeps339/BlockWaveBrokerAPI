@@ -20,8 +20,9 @@ public interface SubsectionPremiumDeductionRepository extends JpaRepository<Subs
 	@Query("select new insurwave.blockwavebrokerAPI.dao.DeductionsCTEDao(d.subsection_Premium_Reference,d.deduction_Premium_Amount_Type_Code,sum(d.deduction_Amount)) from  Subsection_Premium_Deduction d "
 			+ "where d.deduction_Premium_Amount_Type_Code= :premiumAmountTypeCode and d.subsection_Premium_Reference in :premiumReference "
 			+ "group by d.subsection_Premium_Reference,d.deduction_Premium_Amount_Type_Code")
-
-	List<DeductionsCTEDao> getDeductionPojoDetails(@Param("premiumAmountTypeCode") String premiumAmountTypeCode,
+	
+	
+	List<DeductionsCTEDao> getDeductionDetails(@Param("premiumAmountTypeCode") String premiumAmountTypeCode,
 			@Param("premiumReference") List<String> premiumReference);
 
 }
