@@ -34,7 +34,6 @@ public class ContractStepFiveController {
 		 * restClientUtil.call(client, url, httpMethod, req, res, args);
 		 */
 		System.out.println("1....................");
-
 		logger.debug("1......");
 		List<Contract> contracts = contractService.getContracts();
 		System.out.println("2....................");

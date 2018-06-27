@@ -4,14 +4,7 @@ import java.math.BigDecimal;
 
 public class ContractSubsectionPremiumDao {
 
-	public BigDecimal getPremiumAmount() {
-		return premiumAmount;
-	}
-
-	public void setPremiumAmount(BigDecimal premiumAmount) {
-		this.premiumAmount = premiumAmount;
-	}
-
+	
 	private String contract_Subsection_Premium_Reference;
 
 	private BigDecimal premiumAmount;
@@ -28,6 +21,14 @@ public class ContractSubsectionPremiumDao {
 
 	public void setContract_Subsection_Premium_Reference(String contract_Subsection_Premium_Reference) {
 		this.contract_Subsection_Premium_Reference = contract_Subsection_Premium_Reference;
+	}
+	
+	public BigDecimal getPremiumAmount() {
+		return premiumAmount;
+	}
+
+	public void setPremiumAmount(BigDecimal premiumAmount) {
+		this.premiumAmount = premiumAmount;
 	}
 
 }

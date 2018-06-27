@@ -46,6 +46,9 @@ public class ParticipantPublicRoleJsonToEntityConvertor
 				Subsection_Participant_Public_Role::setParticipant_Legal_Entity_Reference));
 		typeMap.addMappings(mapper -> mapper.map(ShareAllocation::getContract_Subsection_UUID,
 				Subsection_Participant_Public_Role::setSubsection_Reference));
+		typeMap.addMappings(mapper -> mapper.map(ShareAllocation::getDeclaration_Participant_Function_UUID,
+				Subsection_Participant_Public_Role::setDeclaration_Participant_Function));
+		
 	}
 
 	@Override

@@ -6,10 +6,11 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * The persistent class for the Subsection_Premium_Amount database table.
@@ -22,7 +23,8 @@ public class Subsection_Premium_Amount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+	@GeneratedValue(generator = "generator")
 	@Column(name = "Subsection_Premium_Amount_Reference", unique = true, nullable = false, length = 1)
 	private String subsection_Premium_Amount_Reference;
 

@@ -11,4 +11,6 @@ public interface SubsectionPremiumAmountService {
 	void saveSubsectionPremiumAmount(List<Subsection_Premium_Amount> subsection_Premium_AmountList);
 
 	void update(Subsection_Premium_Amount subsection_Premium_Amount);
+
+	void saveSubsectionPremiumAmount(Subsection_Premium_Amount subsection_Premium_Amount);
 }

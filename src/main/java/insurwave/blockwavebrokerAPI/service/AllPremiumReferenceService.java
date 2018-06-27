@@ -8,9 +8,11 @@ import insurwave.blockwavebrokerAPI.dao.ContractSubsectionPremiumDao;
 public interface AllPremiumReferenceService {
 
 	List<AllPremiumReferenceDao> allPremiumReferences(List<String> uuids);
+	
+	List<String> allPremiumReferences(String uuid);
 
-	void deletePremiumRef(List<AllPremiumReferenceDao> allPremiumRef);
+	void deletePremiumRef(List<String> allPremiumRef);
 
-	List<ContractSubsectionPremiumDao> getContractSubsectionPrem(List<AllPremiumReferenceDao> allPremiumRef);
+	List<ContractSubsectionPremiumDao> getContractSubsectionPrem(List<String> allPremiumRef);
 
 }

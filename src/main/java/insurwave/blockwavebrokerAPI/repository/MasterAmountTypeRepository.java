@@ -11,7 +11,7 @@ import insurwave.blockwavebrokerAPI.domain.MasterAmountType;
 
 public interface MasterAmountTypeRepository extends JpaRepository<MasterAmountType, Integer> {
 
-	@Query("select new insurwave.blockwavebrokerAPI.dao.MasterAmountTypesDaao(m.sno,m.amountTypeCode,m.amount)\r\n"
+	@Query("select new insurwave.blockwavebrokerAPI.dao.MasterAmountTypesDao(m.sno,m.amountTypeCode,m.amount)\r\n"
 			+ "from MasterAmountType m where m.sno < (select p.sno from MasterAmountType p where p.amountTypeCode= :premiumAmountTypeCode)")
 	List<MasterAmountTypesDao> getMasterAmountFor(@Param("premiumAmountTypeCode") String premiumAmountTypeCode);
 
